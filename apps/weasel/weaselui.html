@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weasel Program - Split JS</title>
+
+  <!-- Load Plotly from a CDN -->
+  <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+
+  <style>
+    /* --- Basic Styling --- */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* --- Navigation Bar --- */
+    nav {
+      background-color: #f8f8f8;
+      border-bottom: 1px solid #ddd;
+      padding: 0.5em 1em;
+    }
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 1em;
+    }
+    nav li {
+      display: inline;
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* --- Main Container and Sections --- */
+    .container {
+      padding: 1em;
+      max-width: 900px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 2em;
+    }
+
+    /* --- Controls & Results --- */
+    .controls, .results {
+      margin: 1em 0;
+    }
+    .label {
+      margin-right: 0.5em;
+    }
+
+    /* --- Plot Container --- */
+    #plotDiv {
+      margin-top: 2em;
+      margin-bottom: 2em;
+      width: 100%;
+      max-width: 900px;
+      height: 450px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================== -->
+<!-- Navigation Bar                    -->
+<!-- ================================== -->
+<nav>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#help">Help</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+</nav>
+
+<!-- ================================== -->
+<!-- Main Container                    -->
+<!-- ================================== -->
+<div class="container">
+  <!-- Home Section -->
+  <section id="home">
+    <h1>Weasel Program - Split JS</h1>
+    <p>
+      This page demonstrates the Weasel simulation using an external JavaScript file (<code>weasel.js</code>) 
+      and Plotly for the box plot. You can change the parameters below and watch how the population 
+      evolves toward the target phrase.
+    </p>
+
+    <!-- Controls -->
+    <div class="controls">
+      <label class="label" for="targetInput">Target Phrase:</label>
+      <input 
+        type="text" 
+        id="targetInput" 
+        value="METHINKS IT IS LIKE A WEASEL" 
+        size="30"
+      />
+      <br /><br />
+
+      <label class="label" for="popSizeInput">Population Size:</label>
+      <input 
+        type="number" 
+        id="popSizeInput" 
+        value="100" 
+        min="1" 
+        style="width: 80px;" 
+      />
+      <br /><br />
+
+      <label class="label" for="mutationRateInput">Mutation Rate (%):</label>
+      <input 
+        type="number" 
+        id="mutationRateInput" 
+        value="5" 
+        min="0" 
+        max="100" 
+        style="width: 80px;" 
+      />
+      <br /><br />
+
+      <button id="startBtn">Start Simulation</button>
+      <button id="stopBtn">Stop Simulation</button>
+    </div>
+
+    <!-- Results -->
+    <div class="results">
+      <p id="currentGeneration">Current Generation: 0</p>
+      <p id="bestMatch">Best Match So Far: (none)</p>
+      <p id="stepbacksCount">Stepbacks: 0</p>
+    </div>
+
+    <!-- Plotly box plot container -->
+    <div id="plotDiv"></div>
+  </section>
+
+  <!-- Help Section -->
+  <section id="help">
+    <h2>Help</h2>
+    <p>
+      <strong>Target Phrase:</strong> Enter any phrase. The simulation tries to evolve a population of 
+      random strings into this target phrase.
+    </p>
+    <p>
+      <strong>Population Size:</strong> The number of candidate strings each generation.
+    </p>
+    <p>
+      <strong>Mutation Rate (%):</strong> Chance for each character to mutate.
+    </p>
+    <p>
+      <strong>Stepbacks:</strong> Each time a generation's best fitness is lower than the previous 
+      generation's, the <em>stepbacks</em> counter increments.
+    </p>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      This tool is designed for self-learners, students, and educators exploring evolutionary 
+      concepts. By running the simulation and experimenting with parameters, you can see the 
+      power of incremental selection.
+    </p>
+  </section>
+</div>
+
+<!-- ================================== -->
+<!-- Load External Weasel JS (Logic)   -->
+<!-- ================================== -->
+<script src="weasel.js"></script>
+<script>
+  // On load, immediately call the function that ties the UI to the weasel logic.
+  window.addEventListener("load", () => {
+    initializeWeaselUI();
+  });
+</script>
+</body>
+</html>
